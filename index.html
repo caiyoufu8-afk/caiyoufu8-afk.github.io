@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>王爺開示 靈籤</title>
+    <title>遊巡王爺 靈籤</title>
     <style>
         * {
             margin: 0;
@@ -39,7 +39,7 @@
             margin-bottom: 20px;
         }
 
-        /* 王爺神像區 */
+        /* 王爺神像 置中顯示 */
         .god-section {
             text-align: center;
             margin: 30px 0;
@@ -49,70 +49,6 @@
             height: auto;
             border-radius: 12px;
             box-shadow: 0 0 15px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
-        }
-        .bow-animation {
-            animation: bow 0.8s ease-in-out;
-        }
-        @keyframes bow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* 按鈕樣式 */
-        .god-buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .god-btn {
-            background: #c83232;
-            color: #fff;
-            border: none;
-            font-size: 16px;
-            padding: 10px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .god-btn:hover {
-            background: #a81c1c;
-        }
-
-        /* 對話區 */
-        .chat-box {
-            margin-top: 20px;
-            display: none;
-        }
-        #chat-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-            resize: none;
-        }
-        #chat-submit {
-            margin-top: 10px;
-            background: #c83232;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        #chat-result {
-            margin-top: 15px;
-            padding: 15px;
-            background: #fff5e6;
-            border-radius: 8px;
-            display: none;
-            text-align: center;
-            line-height: 2;
-            font-size: 17px;
-            white-space: pre-line;
         }
 
         /* 求籤區 */
@@ -187,43 +123,22 @@
 </head>
 <body>
     <div class="wrap">
-        <h1>王爺開示 靈籤</h1>
+        <h1>遊巡王爺 靈籤</h1>
         <p class="tip">虔心祝禱，誠心求籤，心誠則靈</p>
 
-        <!-- 音效物件 (隱藏) -->
-        <audio id="soundBow" preload="auto">
-            <source src="https://www.soundjay.com/ambient/bell-01.mp3" type="audio/mpeg">
-        
-        <audio id="soundShake" preload="auto">
-            <source src="https://www.soundjay.com/mechanical/wood-creak-01.mp3" type="audio/mpeg">
-        
-        <audio id="soundResult" preload="auto">
-            <source src="https://www.soundjay.com/ambient/gong-01.mp3" type="audio/mpeg">
-        
-
-        <!-- 王爺神像區 -->
+        <!-- 中間王爺神尊，無多餘按鈕 -->
         <div class="god-section">
-            <img id="god-img" src="https://i.imgur.com/5ZJZQ4y.jpg" alt="王爺神像">
-            <div class="god-buttons">
-                <button class="god-btn" id="bowBtn">虔誠拜拜</button>
-                <button class="god-btn" id="talkBtn">與王爺說話</button>
-            </div>
-
-            <!-- 對話輸入框 -->
-            <div class="chat-box" id="chatBox">
-                <textarea id="chat-input" rows="3" placeholder="在此寫下你想對王爺說的話..."></textarea>
-                <button id="chat-submit">誠心稟告</button>
-                <div id="chat-result"></div>
-            </div>
+            <img id="god-img" src="https://i.imgur.com/5ZJZQ4y.jpg" alt="遊巡王爺神尊">
         </div>
 
-        <!-- 求籤區 -->
+        <!-- 搖籤區 -->
         <div class="stick-box">
             <div class="stick-img" id="stick">🎋</div>
             <br>
             <button id="drawBtn">搖筒求籤</button>
         </div>
 
+        <!-- 籤詩結果 -->
         <div class="result" id="resultBox">
             <div class="lot-no" id="lotNum"></div>
             <div class="poem-text" id="lotPoem"></div>
@@ -236,11 +151,6 @@
     </div>
 
 <script>
-// 音效變數
-const soundBow = document.getElementById('soundBow');
-const soundShake = document.getElementById('soundShake');
-const soundResult = document.getElementById('soundResult');
-
 // 靈籤庫
 const lotList = [
     {
@@ -287,51 +197,7 @@ const lotList = [
     {num:"第十籤 上吉籤",poem:"登山望遠眼界寬，腳下前程路路安。\n貴人相助多提攜，揚眉吐氣在眼前。",exp:"解曰：有貴人扶持，視野開闊。工作、求學皆有助力，把握機會就能有所成就。"}
 ];
 
-// 王爺四句詩回覆庫
-const chatResponses = [
-    "虔心一片達天聽，善念長存福自臨。\n舉步皆逢平安路，四季安然少憂心。",
-    "爾有誠心吾已知，平生行事莫相欺。\n但將正道時時守，福祿綿綿永不移。",
-    "世事紛紛莫強求，隨緣自在少煩憂。\n心田常種慈悲果，滿門吉慶樂悠悠。",
-    "一點真心感上蒼，神靈暗裡護身旁。\n諸般險阻皆消散，前路光明萬事昌。",
-    "積善之家有餘祥，光明大道任君行。\n休疑前路多風雨，自有天恩相護禦。"
-];
-
-// 拜拜功能 + 音效
-const bowBtn = document.getElementById('bowBtn');
-const godImg = document.getElementById('god-img');
-bowBtn.addEventListener('click', () => {
-    soundBow.currentTime = 0;
-    soundBow.play();
-    godImg.classList.add('bow-animation');
-    setTimeout(() => godImg.classList.remove('bow-animation'), 800);
-    alert("王爺已收下你的虔誠祝禱，願你平安吉祥。");
-});
-
-// 對話功能
-const talkBtn = document.getElementById('talkBtn');
-const chatBox = document.getElementById('chatBox');
-const chatSubmit = document.getElementById('chat-submit');
-const chatResult = document.getElementById('chat-result');
-
-talkBtn.addEventListener('click', () => {
-    chatBox.style.display = chatBox.style.display === 'block' ? 'none' : 'block';
-});
-
-chatSubmit.addEventListener('click', () => {
-    const input = document.getElementById('chat-input').value.trim();
-    if (!input) {
-        alert("請先寫下你想對王爺說的話");
-        return;
-    }
-    soundBow.currentTime = 0;
-    soundBow.play();
-    const randomRes = chatResponses[Math.floor(Math.random() * chatResponses.length)];
-    chatResult.style.display = 'block';
-    chatResult.innerHTML = `<strong>王爺開示：</strong><br>${randomRes}`;
-    document.getElementById('chat-input').value = '';
-});
-
-// 搖籤功能 + 音效
+// 求籤功能
 const drawBtn = document.getElementById('drawBtn');
 const stick = document.getElementById('stick');
 const resultBox = document.getElementById('resultBox');
@@ -347,14 +213,8 @@ drawBtn.addEventListener('click', function(){
     stick.classList.add('shake');
     resultBox.style.display = 'none';
 
-    soundShake.currentTime = 0;
-    soundShake.loop = true;
-    soundShake.play();
-
     setTimeout(()=>{
-        soundShake.pause();
         stick.classList.remove('shake');
-
         const randomIdx = Math.floor(Math.random() * lotList.length);
         const selectLot = lotList[randomIdx];
 
@@ -362,9 +222,6 @@ drawBtn.addEventListener('click', function(){
         lotPoem.innerText = selectLot.poem;
         lotExplain.innerText = selectLot.exp;
         resultBox.style.display = 'block';
-
-        soundResult.currentTime = 0;
-        soundResult.play();
 
         drawBtn.innerText = "再次求籤";
         isShaking = false;
