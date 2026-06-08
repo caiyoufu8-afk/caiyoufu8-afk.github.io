@@ -36,19 +36,7 @@
             text-align: center;
             color: #777;
             font-size: 16px;
-            margin-bottom: 20px;
-        }
-
-        /* 王爺神像 置中顯示 */
-        .god-section {
-            text-align: center;
-            margin: 30px 0;
-        }
-        #god-img {
-            width: 220px;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            margin-bottom: 40px;
         }
 
         /* 求籤區 */
@@ -126,12 +114,7 @@
         <h1>遊巡王爺 靈籤</h1>
         <p class="tip">虔心祝禱，誠心求籤，心誠則靈</p>
 
-        <!-- 中間王爺神尊，無多餘按鈕 -->
-        <div class="god-section">
-            <img id="god-img" src="https://i.imgur.com/5ZJZQ4y.jpg" alt="遊巡王爺神尊">
-        </div>
-
-        <!-- 搖籤區 -->
+        <!-- 求籤區 -->
         <div class="stick-box">
             <div class="stick-img" id="stick">🎋</div>
             <br>
@@ -151,6 +134,9 @@
     </div>
 
 <script>
+// 籤筒搖動音效
+const shakeSound = new Audio('https://www.soundjay.com/mechanical/wood-creak-01.mp3');
+
 // 靈籤庫
 const lotList = [
     {
@@ -194,7 +180,7 @@ const lotList = [
         exp: "解曰：近期阻礙較多，諸事不順。凡事低調，遠離紛爭，修身自省，渡過低潮期。"
     },
     {num:"第九籤 上上籤",poem:"瑞氣盈門福自臨，良緣佳運兩相侵。\n一心向善天垂佑，滿堂吉慶樂開心。",exp:"解曰：福運臨門，所求多遂。不論謀事、求緣、求財皆有好結果。"},
-    {num:"第十籤 上吉籤",poem:"登山望遠眼界寬，腳下前程路路安。\n貴人相助多提攜，揚眉吐氣在眼前。",exp:"解曰：有貴人扶持，視野開闊。工作、求學皆有助力，把握機會就能有所成就。"}
+    {num:"第十籤 上吉籤",poem:"登山望遠眼界寬，腳下前程路路安。\n貴人相助多提攜，揚眉吐氣在眼前。",exp:"解曰：有貴人扶持，視野開闊。工作、求學皆有助力，把握機會就能順利。"}
 ];
 
 // 求籤功能
@@ -213,8 +199,16 @@ drawBtn.addEventListener('click', function(){
     stick.classList.add('shake');
     resultBox.style.display = 'none';
 
+    // 播放籤筒音效
+    shakeSound.currentTime = 0;
+    shakeSound.loop = true;
+    shakeSound.play();
+
     setTimeout(()=>{
+        // 停止音效與動畫
+        shakeSound.pause();
         stick.classList.remove('shake');
+
         const randomIdx = Math.floor(Math.random() * lotList.length);
         const selectLot = lotList[randomIdx];
 
