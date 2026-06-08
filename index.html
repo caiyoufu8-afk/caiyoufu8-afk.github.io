@@ -38,8 +38,6 @@
             font-size: 16px;
             margin-bottom: 40px;
         }
-
-        /* 求籤區 */
         .stick-box {
             text-align: center;
             margin: 30px 0;
@@ -114,14 +112,12 @@
         <h1>遊巡王爺 靈籤</h1>
         <p class="tip">虔心祝禱，誠心求籤，心誠則靈</p>
 
-        <!-- 求籤區 -->
         <div class="stick-box">
             <div class="stick-img" id="stick">🎋</div>
             <br>
             <button id="drawBtn">搖筒求籤</button>
         </div>
 
-        <!-- 籤詩結果 -->
         <div class="result" id="resultBox">
             <div class="lot-no" id="lotNum"></div>
             <div class="poem-text" id="lotPoem"></div>
@@ -135,92 +131,4 @@
 
 <script>
 // 籤筒搖動音效
-const shakeSound = new Audio('https://www.soundjay.com/mechanical/wood-creak-01.mp3');
-
-// 靈籤庫
-const lotList = [
-    {
-        num: "第一籤 上上籤",
-        poem: "春風得意滿園芳，萬事亨通福祿長。\n神佛護佑無災障，平安吉慶伴身旁。",
-        exp: "解曰：時來運轉，大吉大利。求財、問事、姻緣、家宅皆順利，堅持善心，好運常伴。"
-    },
-    {
-        num: "第二籤 上上籤",
-        poem: "雲開霧散見青天，前路光明福綿綿。\n但守本心行正道，榮華富貴自來全。",
-        exp: "解曰：困難消散，否極泰來。過去煩憂皆去，接下來諸事順心，宜積極行事。"
-    },
-    {
-        num: "第三籤 上吉籤",
-        poem: "善念存心天自知，神靈相護不相離。\n耕耘自有豐收日，莫嘆前途運勢遲。",
-        exp: "解曰：善有善報，努力必有回報。暫時未見成效也無須心急，靜待時機即可。"
-    },
-    {
-        num: "第四籤 上吉籤",
-        poem: "吉光祥氣滿門庭，喜事頻臨笑語聲。\n出入平安無阻隔，一帆風順萬事成。",
-        exp: "解曰：家宅興旺，喜事將臨。外出、求謀皆順暢，人際和諧，福氣滿盈。"
-    },
-    {
-        num: "第五籤 中吉籤",
-        poem: "平路行舟不用愁，隨緣度日亦風流。\n若能謹慎多行善，小小凶厄自然休。",
-        exp: "解曰：運勢平穩，無大風大浪。行事保守穩重，多積德行善，可化解細微阻礙。"
-    },
-    {
-        num: "第六籤 中平籤",
-        poem: "流水滔滔路漫漫，一時得失莫心亂。\n守得雲開見明月，遲早安康福自歡。",
-        exp: "解曰：運勢平平，進退兩宜。不必急於求成，按部就班，時機到來自有收穫。"
-    },
-    {
-        num: "第七籤 下平籤",
-        poem: "暫時陰雨掩光華，且斂鋒芒守舊家。\n莫貪外利輕舉動，安然度日免爭差。",
-        exp: "解曰：運勢稍滯，宜守不宜攻。暫時安於現狀，不要冒險投資、變動，靜待好時機。"
-    },
-    {
-        num: "第八籤 下下籤",
-        poem: "風波乍起路崎嶇，凡事多磨少順舒。\n閉門思過修心性，遠離是非免災虞。",
-        exp: "解曰：近期阻礙較多，諸事不順。凡事低調，遠離紛爭，修身自省，渡過低潮期。"
-    },
-    {num:"第九籤 上上籤",poem:"瑞氣盈門福自臨，良緣佳運兩相侵。\n一心向善天垂佑，滿堂吉慶樂開心。",exp:"解曰：福運臨門，所求多遂。不論謀事、求緣、求財皆有好結果。"},
-    {num:"第十籤 上吉籤",poem:"登山望遠眼界寬，腳下前程路路安。\n貴人相助多提攜，揚眉吐氣在眼前。",exp:"解曰：有貴人扶持，視野開闊。工作、求學皆有助力，把握機會就能順利。"}
-];
-
-// 求籤功能
-const drawBtn = document.getElementById('drawBtn');
-const stick = document.getElementById('stick');
-const resultBox = document.getElementById('resultBox');
-const lotNum = document.getElementById('lotNum');
-const lotPoem = document.getElementById('lotPoem');
-const lotExplain = document.getElementById('lotExplain');
-
-let isShaking = false;
-drawBtn.addEventListener('click', function(){
-    if(isShaking) return;
-    isShaking = true;
-    drawBtn.innerText = "搖動中...";
-    stick.classList.add('shake');
-    resultBox.style.display = 'none';
-
-    // 播放籤筒音效
-    shakeSound.currentTime = 0;
-    shakeSound.loop = true;
-    shakeSound.play();
-
-    setTimeout(()=>{
-        // 停止音效與動畫
-        shakeSound.pause();
-        stick.classList.remove('shake');
-
-        const randomIdx = Math.floor(Math.random() * lotList.length);
-        const selectLot = lotList[randomIdx];
-
-        lotNum.innerText = selectLot.num;
-        lotPoem.innerText = selectLot.poem;
-        lotExplain.innerText = selectLot.exp;
-        resultBox.style.display = 'block';
-
-        drawBtn.innerText = "再次求籤";
-        isShaking = false;
-    }, 1200);
-});
-</script>
-</body>
-</html>
+const shakeSound = new Audio('https://www.soundjay.com/mechanical/
