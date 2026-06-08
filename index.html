@@ -12,15 +12,14 @@
             font-family: "微軟正黑體", "標楷體", serif;
         }
         body {
-            background: #f9f1e3 url('') no-repeat center;
-            background-size: cover;
+            background: #f9f1e3;
             min-height: 100vh;
             padding: 20px 10px;
         }
         .wrap {
             max-width: 620px;
             margin: 0 auto;
-            background: rgba(255,255,255,0.92);
+            background: rgba(255,255,255,0.95);
             padding: 35px 25px;
             border-radius: 16px;
             box-shadow: 0 4px 25px rgba(139, 26, 26, 0.25);
@@ -37,8 +36,86 @@
             text-align: center;
             color: #777;
             font-size: 16px;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
+
+        /* 王爺神像區 */
+        .god-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        #god-img {
+            width: 220px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .bow-animation {
+            animation: bow 0.8s ease-in-out;
+        }
+        @keyframes bow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* 拜拜與對話按鈕 */
+        .god-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .god-btn {
+            background: #c83232;
+            color: #fff;
+            border: none;
+            font-size: 16px;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .god-btn:hover {
+            background: #a81c1c;
+        }
+
+        /* 對話輸入區 */
+        .chat-box {
+            margin-top: 20px;
+            display: none;
+        }
+        #chat-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: none;
+        }
+        #chat-submit {
+            margin-top: 10px;
+            background: #c83232;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #chat-result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff5e6;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            line-height: 2;
+            font-size: 17px;
+            white-space: pre-line;
+        }
+
+        /* 求籤區 */
         .stick-box {
             text-align: center;
             margin: 30px 0;
@@ -114,6 +191,23 @@
         <h1>王爺開示 靈籤</h1>
         <p class="tip">虔心祝禱，誠心求籤，心誠則靈</p>
 
+        <!-- 王爺神像區 -->
+        <div class="god-section">
+            <img id="god-img" src="https://i.imgur.com/5ZJZQ4y.jpg" alt="王爺神像">
+            <div class="god-buttons">
+                <button class="god-btn" id="bowBtn">虔誠拜拜</button>
+                <button class="god-btn" id="talkBtn">與王爺說話</button>
+            </div>
+
+            <!-- 對話輸入框 -->
+            <div class="chat-box" id="chatBox">
+                <textarea id="chat-input" rows="3" placeholder="在此寫下你想對王爺說的話..."></textarea>
+                <button id="chat-submit">誠心稟告</button>
+                <div id="chat-result"></div>
+            </div>
+        </div>
+
+        <!-- 求籤區 -->
         <div class="stick-box">
             <div class="stick-img" id="stick">🎋</div>
             <br>
@@ -132,7 +226,262 @@
     </div>
 
 <script>
-// 60支完整王爺靈籤庫
+// 王爺靈籤庫
+const lotList = 
+要有音效
+這是最終完整版，整合所有功能：
+✅ 王爺神像 + 拜拜動畫
+✅ 與王爺對話（四句詩聯回覆）
+✅ 搖籤筒動畫 + 完整靈籤
+✅ 加入音效（拜拜音效、搖籤音效、求籤結果音效）
+✅ 手機 / 電腦通用、點連結直接開啟
+直接全選複製，覆蓋你 GitHub 上的 index.html 即可使用：
+html
+预览
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王爺開示 靈籤</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微軟正黑體", "標楷體", serif;
+        }
+        body {
+            background: #f9f1e3;
+            min-height: 100vh;
+            padding: 20px 10px;
+        }
+        .wrap {
+            max-width: 620px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            padding: 35px 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 25px rgba(139, 26, 26, 0.25);
+            border: 2px solid #c83232;
+        }
+        h1 {
+            color: #a81c1c;
+            text-align: center;
+            font-size: 32px;
+            letter-spacing: 6px;
+            margin-bottom: 8px;
+        }
+        .tip {
+            text-align: center;
+            color: #777;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* 王爺神像區 */
+        .god-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        #god-img {
+            width: 220px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .bow-animation {
+            animation: bow 0.8s ease-in-out;
+        }
+        @keyframes bow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* 按鈕樣式 */
+        .god-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .god-btn {
+            background: #c83232;
+            color: #fff;
+            border: none;
+            font-size: 16px;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .god-btn:hover {
+            background: #a81c1c;
+        }
+
+        /* 對話區 */
+        .chat-box {
+            margin-top: 20px;
+            display: none;
+        }
+        #chat-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: none;
+        }
+        #chat-submit {
+            margin-top: 10px;
+            background: #c83232;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #chat-result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff5e6;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            line-height: 2;
+            font-size: 17px;
+            white-space: pre-line;
+        }
+
+        /* 求籤區 */
+        .stick-box {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .stick-img {
+            font-size: 80px;
+            display: inline-block;
+        }
+        .shake {
+            animation: shake 0.5s infinite;
+        }
+        @keyframes shake {
+            0% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
+            100% { transform: rotate(-8deg); }
+        }
+        #drawBtn {
+            background: #b82222;
+            color: #fff;
+            border: none;
+            font-size: 20px;
+            padding: 14px 45px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+        }
+        #drawBtn:hover {
+            background: #d12c2c;
+        }
+        .result {
+            margin-top: 35px;
+            padding: 25px;
+            background: #fff5e6;
+            border-radius: 12px;
+            border: 1px solid #e0c088;
+            display: none;
+            line-height: 2.2;
+        }
+        .lot-no {
+            font-size: 24px;
+            color: #a81c1c;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .poem-text {
+            font-size: 18px;
+            text-align: center;
+            white-space: pre-line;
+            color: #222;
+        }
+        .explain {
+            margin-top: 20px;
+            font-size: 17px;
+            color: #444;
+            text-align: left;
+            border-top: 1px dashed #ccc;
+            padding-top: 15px;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>王爺開示 靈籤</h1>
+        <p class="tip">虔心祝禱，誠心求籤，心誠則靈</p>
+
+        <!-- 音效物件 (隱藏) -->
+        <audio id="soundBow" preload="auto">
+            <source src="https://www.soundjay.com/ambient/bell-01.mp3" type="audio/mpeg">
+        
+        <audio id="soundShake" preload="auto">
+            <source src="https://www.soundjay.com/mechanical/wood-creak-01.mp3" type="audio/mpeg">
+        
+        <audio id="soundResult" preload="auto">
+            <source src="https://www.soundjay.com/ambient/gong-01.mp3" type="audio/mpeg">
+        
+
+        <!-- 王爺神像區 -->
+        <div class="god-section">
+            <img id="god-img" src="https://i.imgur.com/5ZJZQ4y.jpg" alt="王爺神像">
+            <div class="god-buttons">
+                <button class="god-btn" id="bowBtn">虔誠拜拜</button>
+                <button class="god-btn" id="talkBtn">與王爺說話</button>
+            </div>
+
+            <!-- 對話輸入框 -->
+            <div class="chat-box" id="chatBox">
+                <textarea id="chat-input" rows="3" placeholder="在此寫下你想對王爺說的話..."></textarea>
+                <button id="chat-submit">誠心稟告</button>
+                <div id="chat-result"></div>
+            </div>
+        </div>
+
+        <!-- 求籤區 -->
+        <div class="stick-box">
+            <div class="stick-img" id="stick">🎋</div>
+            <br>
+            <button id="drawBtn">搖筒求籤</button>
+        </div>
+
+        <div class="result" id="resultBox">
+            <div class="lot-no" id="lotNum"></div>
+            <div class="poem-text" id="lotPoem"></div>
+            <div class="explain" id="lotExplain"></div>
+        </div>
+
+        <div class="footer">
+            積善餘慶 · 諸事順遂
+        </div>
+    </div>
+
+<script>
+// 音效變數
+const soundBow = document.getElementById('soundBow');
+const soundShake = document.getElementById('soundShake');
+const soundResult = document.getElementById('soundResult');
+
+// 靈籤庫
 const lotList = [
     {
         num: "第一籤 上上籤",
@@ -174,12 +523,56 @@ const lotList = [
         poem: "風波乍起路崎嶇，凡事多磨少順舒。\n閉門思過修心性，遠離是非免災虞。",
         exp: "解曰：近期阻礙較多，諸事不順。凡事低調，遠離紛爭，修身自省，渡過低潮期。"
     },
-    // 以下可持續擴充至60支，格式同上
     {num:"第九籤 上上籤",poem:"瑞氣盈門福自臨，良緣佳運兩相侵。\n一心向善天垂佑，滿堂吉慶樂開心。",exp:"解曰：福運臨門，所求多遂。不論謀事、求緣、求財皆有好結果。"},
     {num:"第十籤 上吉籤",poem:"登山望遠眼界寬，腳下前程路路安。\n貴人相助多提攜，揚眉吐氣在眼前。",exp:"解曰：有貴人扶持，視野開闊。工作、求學皆有助力，把握機會就能有所成就。"}
 ];
 
-const btn = document.getElementById('drawBtn');
+// 王爺四句詩回覆庫
+const chatResponses = [
+    "虔心一片達天聽，善念長存福自臨。\n舉步皆逢平安路，四季安然少憂心。",
+    "爾有誠心吾已知，平生行事莫相欺。\n但將正道時時守，福祿綿綿永不移。",
+    "世事紛紛莫強求，隨緣自在少煩憂。\n心田常種慈悲果，滿門吉慶樂悠悠。",
+    "一點真心感上蒼，神靈暗裡護身旁。\n諸般險阻皆消散，前路光明萬事昌。",
+    "積善之家有餘祥，光明大道任君行。\n休疑前路多風雨，自有天恩相護禦。"
+];
+
+// 拜拜功能 + 音效
+const bowBtn = document.getElementById('bowBtn');
+const godImg = document.getElementById('god-img');
+bowBtn.addEventListener('click', () => {
+    soundBow.currentTime = 0;
+    soundBow.play();
+    godImg.classList.add('bow-animation');
+    setTimeout(() => godImg.classList.remove('bow-animation'), 800);
+    alert("王爺已收下你的虔誠祝禱，願你平安吉祥。");
+});
+
+// 對話功能
+const talkBtn = document.getElementById('talkBtn');
+const chatBox = document.getElementById('chatBox');
+const chatSubmit = document.getElementById('chat-submit');
+const chatResult = document.getElementById('chat-result');
+
+talkBtn.addEventListener('click', () => {
+    chatBox.style.display = chatBox.style.display === 'block' ? 'none' : 'block';
+});
+
+chatSubmit.addEventListener('click', () => {
+    const input = document.getElementById('chat-input').value.trim();
+    if (!input) {
+        alert("請先寫下你想對王爺說的話");
+        return;
+    }
+    soundBow.currentTime = 0;
+    soundBow.play();
+    const randomRes = chatResponses[Math.floor(Math.random() * chatResponses.length)];
+    chatResult.style.display = 'block';
+    chatResult.innerHTML = `<strong>王爺開示：</strong><br>${randomRes}`;
+    document.getElementById('chat-input').value = '';
+});
+
+// 搖籤功能 + 音效
+const drawBtn = document.getElementById('drawBtn');
 const stick = document.getElementById('stick');
 const resultBox = document.getElementById('resultBox');
 const lotNum = document.getElementById('lotNum');
@@ -187,18 +580,21 @@ const lotPoem = document.getElementById('lotPoem');
 const lotExplain = document.getElementById('lotExplain');
 
 let isShaking = false;
-
-btn.addEventListener('click', function(){
+drawBtn.addEventListener('click', function(){
     if(isShaking) return;
     isShaking = true;
-    btn.innerText = "搖動中...";
+    drawBtn.innerText = "搖動中...";
     stick.classList.add('shake');
     resultBox.style.display = 'none';
 
-    // 搖動動畫持續1.2秒後顯示籤文
+    soundShake.currentTime = 0;
+    soundShake.loop = true;
+    soundShake.play();
+
     setTimeout(()=>{
+        soundShake.pause();
         stick.classList.remove('shake');
-        // 隨機取籤
+
         const randomIdx = Math.floor(Math.random() * lotList.length);
         const selectLot = lotList[randomIdx];
 
@@ -207,7 +603,10 @@ btn.addEventListener('click', function(){
         lotExplain.innerText = selectLot.exp;
         resultBox.style.display = 'block';
 
-        btn.innerText = "再次求籤";
+        soundResult.currentTime = 0;
+        soundResult.play();
+
+        drawBtn.innerText = "再次求籤";
         isShaking = false;
     }, 1200);
 });
